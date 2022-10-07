@@ -1,0 +1,2 @@
+# VSOPS
+Kurssiprojekti sovelluskehityskurssia varten.
