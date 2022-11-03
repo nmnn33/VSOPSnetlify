@@ -1,0 +1,61 @@
+body, html {
+  
+}
+
+.navbar {
+  color: white;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.link-row {
+  margin-top: 5px;
+}
+
+.NavBarLink {
+  margin: 5px;
+}
+
+.signout {
+  overflow: auto;
+  float: right;
+}
+
+.OrderCard {
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.signout-button {
+  color: white;
+  background-color: red;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+p {
+  margin-bottom: 5px;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.card-content{
+  overflow: auto;
+  width: auto;
+}
+
+.card-text {
+  display: inline-block;
+}
+
+.orderCardBtn {
+  margin-left: 20px;
+  vertical-align: top;
+  float: right;
+}
