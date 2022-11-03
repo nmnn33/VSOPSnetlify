@@ -8,13 +8,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" href="#">Aloitus</a>
+            <RouterLink class="nav-link text-white" to="/">Aloitus</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white" href="#">Tilaukset</a>
+            <RouterLink class="nav-link text-white" to="/tilaukset">Tilaukset</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-white">Varasto</a>
+            <a class="nav-link disabled">Varasto</a>
           </li>
         </ul>
         <form class="d-flex" role="search">
