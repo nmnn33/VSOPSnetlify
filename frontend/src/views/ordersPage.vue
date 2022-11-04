@@ -6,7 +6,7 @@
 
 <template>
     <div v-if="orders" class="row">
-        <OrderCard v-if="orders" v-for="order in orders" :key="orders._id" :orders="order" />
+        <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
     </div>
 </template>
 
