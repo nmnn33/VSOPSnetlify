@@ -28,4 +28,4 @@ coverage
 *.sw?
 
 # backend puolen env
-VSOPTommy\.env
+.env
