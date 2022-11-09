@@ -11,7 +11,7 @@ Lataaminen:
 npm install
 ```
 
-Se lataa kaikki tarvittavat moduulit ja riippuvuudet. 3. Kansiossa backend kirjoita konsolissa
+Se lataa kaikki tarvittavat moduulit ja riippuvuudet. Kansiossa backend kirjoita konsolissa
 
 ```
 node app.js
