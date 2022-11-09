@@ -17,19 +17,17 @@ Se lataa kaikki tarvittavat moduulit ja riippuvuudet. 3. Kansiossa backend kirjo
 node app.js
 ```
 
-Käynnistääksesi backend ja saadaksesi yhteys tietokantaan.
+Käynnistääksesi backend ja saadaksesi yhteys tietokantaan, kansiossa frontend kirjoita konsolissa
 
 ```
-Kansiossa frontend kirjoita konsolissa
-```
-
 npm run dev
-
 ```
+
 Käynnistääksesi verkkosivun. Kopioi konsolissa oleva localhost omaan nettiselaimeesi.
+
 3. Jos tilauksia ei näy, pitää sinun luoda ".env" niminen tiedosto backend kansioon ja lisätä sinne tietokannan tiedot.
 4. Olet valmis käyttämään ohjelmaamme VSOP.
 -----------------------------------------------------------------------------------------------------
 
 Course project for Application Development course. The project is currently work-in-progress.
-```
+
