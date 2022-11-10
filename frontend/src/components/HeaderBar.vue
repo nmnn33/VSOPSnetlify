@@ -37,20 +37,12 @@
 <script>
   export default {
         name : 'getOneOrder',
-        data (){
-            return {
-                orders: []
-            }
-        },
         methods : {
            async dbQuery(e) {
             if (document.getElementById('navbarSelect').value == "Tilaukset") {
-              const response =  await fetch("http://localhost:3000/findOneOrders/" + document.getElementById('navSearch').value);
-              const data = await response.json();
-              const arrayMuoto = [data]; //Tämä kohta on tarpeen, sillä response antaa Object, ja jotta v-for toimii pitää olla array. Tässä on array, jossa on vain 1 objekti.
-              this.orders = arrayMuoto;
-              console.log(arrayMuoto);
+              const queryStr = document.getElementById('navSearch').value;
               document.getElementById('navSearch').value = "";
+              this.$router.push({name: "Order Details", params: {id: queryStr}}); //Siirtyy orderDetailsPage.vue sivulle parametrina kirjoitettu haku
             }
             else if (document.getElementById('navbarSelect').value == "Varastotuote") {
               console.log("Varastotuotteet");
@@ -59,9 +51,6 @@
               console.log("jotain meni pieleen...");
             }
           }
-        },
-        updated(){
-          this.dbQuery();
         }
   };
 </script>
