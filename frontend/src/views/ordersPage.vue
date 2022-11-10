@@ -1,7 +1,5 @@
 <script setup>
   import OrderCard from '../components/OrderCard.vue';
-
-
 </script>
 
 <template>

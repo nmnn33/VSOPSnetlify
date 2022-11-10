@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import homePage from '../views/homePage.vue';
 import orderDetailsPage from '../views/orderDetailsPage.vue';
 import ordersPage from '../views/ordersPage.vue';
+import dbQueryResultPage from '../views/dbQueryResultPage.vue'
 
 //Tämän alle pistetään ne reitit. Mukaan polku, reitin nimi ja komponentti. Reittien välillä liikkuminen tapahtuu RouterLink komponenteilla.
 const routes = [
@@ -20,7 +21,11 @@ const routes = [
         name: 'Order Details',
         component: orderDetailsPage,
         props: true,
-        query: true
+    },
+    {
+        path: '/hakutulos',
+        name: 'dbQueryResult',
+        component: dbQueryResultPage
     }
 ]
 

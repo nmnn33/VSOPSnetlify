@@ -1,5 +1,5 @@
-body, html {
-  
+body,
+html {
 }
 
 .navbar {
@@ -15,6 +15,10 @@ body, html {
 
 .NavBarLink {
   margin: 5px;
+}
+
+#navbarSelect {
+  width: 50%;
 }
 
 .signout {
@@ -45,7 +49,7 @@ p {
   margin-bottom: 20px;
 }
 
-.card-content{
+.card-content {
   overflow: auto;
   width: auto;
 }
