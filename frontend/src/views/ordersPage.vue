@@ -3,8 +3,12 @@
 </script>
 
 <template>
-    <div v-if="orders" class="row">
+    <div v-if="this.orders" class="row">
+        <!-- Jokaista tilausta kohden tehään OrderCard kompnentti -->
         <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
+    </div>
+    <div v-else-if="this.error">
+      <h1>Tilauksia ei nyt pystytä hakemaan.</h1>
     </div>
 </template>
 

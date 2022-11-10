@@ -7,7 +7,7 @@
 <script>
 
   export default{
-    props: ['id'],
+    props: ['id'],  //Saamme yksittäisen tilauksen ID:n propsina.
     
     data(){
       return{
@@ -19,7 +19,7 @@
         this.$watch(    //Täällä kohtaa tehdään uusi tietokantahaku, mutta se tehdään vasta kun näkymä on latautunut.
             () => this.$route.params,
             () => {
-                fetch("http://localhost:3000/findOneOrders/" + this.$route.params.id) //Haetaan propsina saadun ID:n perusteella tiedot tilauksesta.
+                fetch("http://localhost:3000/findOneOrders/" + this.$route.params.id) //Haetaan parametreissa olevan ID:n perusteella tiedot tilauksesta.
                 .then(res => res.json())
                 .then(data => this.details = data)
                 .catch(err => this.error = err.message)
@@ -28,6 +28,4 @@
         )
     }
   }
-
-  console.log(['id']);
 </script>
