@@ -10,7 +10,7 @@
             Puhelin: {{orders.phoneNumber}} <br>
             Sähköposti: {{orders.customerEmail}}
           </p>
-          <a href="#" class="btn btn-primary orderCardBtn"><i class="bi bi-eye-fill"></i> Info</a>
+          <RouterLink :to="{ name: 'Order Details', params: {id: orders._id}}" class="btn btn-primary orderCardBtn" :orders="this.orders"><i class="bi bi-eye-fill"></i> Info</RouterLink>
         </div>
       </div>
     </div>

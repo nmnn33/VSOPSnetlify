@@ -14,6 +14,13 @@ const routes = [
         path: '/tilaukset',
         name: 'Orders',
         component: ordersPage
+    },
+    {
+        path: '/tilaukset/:id',
+        name: 'Order Details',
+        component: orderDetailsPage,
+        props: true,
+        query: true
     }
 ]
 
