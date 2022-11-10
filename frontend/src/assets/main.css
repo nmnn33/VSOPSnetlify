@@ -1,7 +1,4 @@
-body,
-html {
-}
-
+/* Navigointipalkin asiat: */
 .navbar {
   color: white;
   border-bottom-right-radius: 10px;
@@ -26,19 +23,21 @@ html {
   float: right;
 }
 
+.signout-button {
+  color: white;
+  background-color: red;
+  border-radius: 10px;
+  padding: 7px;
+}
+
+
+/* OrderCard komponentin asiat: */
 .OrderCard {
   background-color: white;
   border-radius: 10px;
   border: 2px solid black;
   padding: 10px;
   margin-bottom: 10px;
-}
-
-.signout-button {
-  color: white;
-  background-color: red;
-  border-radius: 10px;
-  padding: 7px;
 }
 
 p {
@@ -62,4 +61,26 @@ p {
   margin-left: 20px;
   vertical-align: top;
   float: right;
+}
+
+
+/* orderDetailsPage-sivun asiat: */
+.orderTitle1 {
+  display: inline-block;
+  margin-right: 20px;
+  padding-right: 20px;
+  border-right: 1px solid black;
+}
+
+.orderTitle2 {
+  display: inline-block;
+}
+
+.statusTitle {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.statusName {
+  display: inline-block;
 }
