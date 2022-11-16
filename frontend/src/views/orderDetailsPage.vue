@@ -18,7 +18,11 @@
       </div>
       <div class="col-lg-6">
         <h4>Tuotteet</h4>
-        <p>{{productDetails}}</p>
+        <div v-for="product in productDetails" :key="productDetails._id">
+          <h5>{{product[0].productName}}</h5>
+          <p>Luokka: {{product[0].productType}}</p>
+          <p>Hinta: {{product[0].price}} €</p>
+        </div>
       </div>
     </div>
     
@@ -55,11 +59,17 @@
         this.getProductInfo()
       },
       async getProductInfo(){
-          console.log(this.details.productsInfo.productName)
-          // await fetch("http://localhost:3000/findOneInventory/" + this.details.productsInfo.productName)
-          // .then(res => res.json())
-          // .then(data => this.productDetails = data)
-          // .catch(err => this.error = err.message)
+          console.log("Getting products list for order " + this.details._id)
+          console.log(this.details.products)
+          var i = 0;
+          while(i < this.details.products.length){
+            await fetch("http://localhost:3000/findOneInventory/" + this.details.products[i].productID)
+            .then(res => res.json())
+            .then(data => this.productDetails[i] = data)
+            .catch(err => this.error = err.message)
+            i++
+          }
+          console.log(this.productDetails)
       }
     }
   }

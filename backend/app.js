@@ -47,9 +47,9 @@ app.get("/findInventory", function (req, res) {
     });
 });
 
-//consoleen tuo yhden Inventory dokumentin productName mukaan, joka saadaan url
-app.get("/findOneInventory/:productName", function (req, res) {
-    Inventory.find({ productName: "Simply Audio device" }, function (err, results) {
+//consoleen tuo yhden Inventory dokumentin ID:n mukaan, joka saadaan url
+app.get("/findOneInventory/:id", function (req, res) {
+    Inventory.find({ _id: req.params.id }, function (err, results) {
         if (err) {
             console.log("Järjestelmässä tapahtui virhe", 500);
             console.log(req.params.productName);
@@ -129,7 +129,7 @@ app.post("/addOrder", function (req, res) {
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         customerEmail: req.body.customerEmail,
-        productsInfo: {},
+        productsInfo: [{}],
         quantity: req.body.quantity,
         price: req.body.price,
         orderDate: ordertime,

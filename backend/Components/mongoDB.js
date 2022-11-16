@@ -18,6 +18,7 @@ const InventorySchema = new mongoose.Schema({
     productDescription: String,
     productType: String,
     quantity: Number,
+    price: Number,
     image: String,
     productDate: Date
 });
@@ -31,13 +32,10 @@ const OrdersSchema = new mongoose.Schema({
     lastName: String,
     phoneNumber: String,
     customerEmail: String,
-    productsInfo: {
-        type: Map,
-        of: String,
-        ref: "Inventory"
-    },
-    quantity: Number,
-    price: Number,
+    products: [{
+        productID: String,
+        quantity: Number
+    }],
     orderDate: Date,
     deliveryAddress: String,
     deliveryPostalCode: String,
