@@ -38,8 +38,9 @@
            async dbQuery(e) {
             if (document.getElementById('navbarSelect').value == "Tilaukset") {
               const queryStr = document.getElementById('navSearch').value;
+              const completeStr = queryStr.charAt(0).toUpperCase() + queryStr.slice(1).toLowerCase(); //Muuttaa eka kirjain aina isoksi ja loput pieniksi, helpottaa hakua!
               document.getElementById('navSearch').value = "";
-              this.$router.push({name: "dbQueryResult", params: {firstName: queryStr}}); //Siirtyy sivulle
+              this.$router.push({name: "dbQueryResult", params: {firstName: completeStr}}); //Siirtyy sivulle
             }
             else if (document.getElementById('navbarSelect').value == "Varastotuote") {
               console.log("Varastotuotteet");

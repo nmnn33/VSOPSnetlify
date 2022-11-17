@@ -1,23 +1,9 @@
+<script setup>
+  import OrderCard from '../components/OrderCard.vue';
+</script>
+
 <template>
-  <div v-for="orders in orders">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Tilaus ID: {{orders._id}}</h5>
-        <div class="card-content">
-          <p class="card-text">
-            Tilaus pvm: {{orders.orderDate}} <br>
-            Asiakkaan nimi: {{orders.firstName}} {{orders.lastName}} <br>
-            Puhelin: {{orders.phoneNumber}} <br>
-            Sähköposti: {{orders.customerEmail}}
-          </p>
-          <!-- Alla pistetään Vue Router Linkki tilaustiedot sivulle. Sille syötetään parametrina yksittäisen tilauksen ID -->
-          <RouterLink :to="{ name: 'Order Details', params: {id: orders._id}}" class="btn btn-primary orderCardBtn"><i class="bi bi-eye-fill"></i> Info</RouterLink>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
 </template>
 
 <script>
