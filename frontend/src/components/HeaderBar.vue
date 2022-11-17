@@ -16,9 +16,6 @@
           <li class="nav-item">
             <a class="nav-link disabled">Varasto</a>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link text-white" to="/hakutulos">Haku</RouterLink>
-          </li>
         </ul>
         <form class="d-flex" role="search" @submit.prevent="dbQuery"> <!--@submit-prevent estää sivua päivittymästä kun tehdään submit, käynnistetään funktio dbQuery()-->
           <select class="form-control form-control-sm" id="navbarSelect">
@@ -42,7 +39,7 @@
             if (document.getElementById('navbarSelect').value == "Tilaukset") {
               const queryStr = document.getElementById('navSearch').value;
               document.getElementById('navSearch').value = "";
-              this.$router.push({name: "Order Details", params: {id: queryStr}}); //Siirtyy orderDetailsPage.vue sivulle parametrina kirjoitettu haku
+              this.$router.push({name: "dbQueryResult", params: {firstName: queryStr}}); //Siirtyy sivulle
             }
             else if (document.getElementById('navbarSelect').value == "Varastotuote") {
               console.log("Varastotuotteet");

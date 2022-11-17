@@ -23,7 +23,7 @@ const routes = [
         props: true,
     },
     {
-        path: '/hakutulos',
+        path: '/hakutulos/:firstName',
         name: 'dbQueryResult',
         component: dbQueryResultPage
     }

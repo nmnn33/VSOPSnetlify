@@ -119,6 +119,20 @@ app.get("/findOneOrders/:id", function (req, res) {
     });
 });
 
+//consoleen tuo yhden order _id mukaan, joka saadaan url
+app.get("/findOneOrdersName/:firstName", function (req, res) {
+    Orders.find({ firstName: req.params.firstName }, function (err, results) {
+        if (err) {
+            console.log("Järjestelmässä tapahtui virhe", 500);
+        }
+        // Muuten lähetetään tietokannan tulokset selaimelle 
+        else {
+            console.log(results + "From findOne");
+            res.json(results);
+        }
+    });
+});
+
 //Lisää yhden tilauksen, jossa on tällä kertaa vielä vain yksi tuote.
 app.post("/addOrder", function (req, res) {
     var idString = req.body.inventory_id.toString();

@@ -1,22 +1,56 @@
-<script setup>
-  import OrderCard from '../components/OrderCard.vue';
-</script>
-
 <template>
-  <form class="d-flex" role="search" @submit.prevent="dbQuery"> <!--@submit-prevent estää sivua päivittymästä kun tehdään submit, käynnistetään funktio dbQuery()-->
-          <select class="form-control form-control-sm" id="navbarSelect1">
-            <option>Tilaukset</option>
-            <option>Varastotuote</option>
-          </select>
-          <input class="form-control me-2" type="search" placeholder="Hae tilauksia" aria-label="Search" id="navSearch1" required>
-          <button class="btn btn-success" type="submit">Hae</button>
-  </form>
-    <div v-if="orders" class="row">
-        <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
+  <div v-for="orders in orders">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Tilaus ID: {{orders._id}}</h5>
+        <div class="card-content">
+          <p class="card-text">
+            Tilaus pvm: {{orders.orderDate}} <br>
+            Asiakkaan nimi: {{orders.firstName}} {{orders.lastName}} <br>
+            Puhelin: {{orders.phoneNumber}} <br>
+            Sähköposti: {{orders.customerEmail}}
+          </p>
+          <!-- Alla pistetään Vue Router Linkki tilaustiedot sivulle. Sille syötetään parametrina yksittäisen tilauksen ID -->
+          <RouterLink :to="{ name: 'Order Details', params: {id: orders._id}}" class="btn btn-primary orderCardBtn"><i class="bi bi-eye-fill"></i> Info</RouterLink>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 </template>
 
 <script>
+  export default{
+    props: ['firstName'],  //Saamme yksittäisen tilauksen ID:n propsina.
+    
+    data(){
+      return{
+        orders: [],
+        error: []
+      }
+    },
+    created() {
+        this.$watch(    //Täällä kohtaa tehdään uusi tietokantahaku, mutta se tehdään vasta kun näkymä on latautunut.
+            () => this.$route.params,
+            () => {
+              this.getInfo()
+            },
+            { immediate: true }
+        )
+    },
+    methods: {
+      async getInfo(){
+          await fetch("http://localhost:3000/findOneOrdersName/" + this.$route.params.firstName) //Haetaan parametreissa olevan ID:n perusteella tiedot tilauksesta.
+          .then(res => res.json())
+          .then(data => this.orders = data)
+          .catch(err => this.error = err.message)
+          console.log(this.orders);
+      }
+    }
+  }
+
+/* vanhaa tietoa varmuuden vuoksi taltioitu!
   export default {
         name : 'getOneOrder',
         data (){
@@ -45,5 +79,5 @@
         updated(){
           this.dbQuery();
         }
-  };
+  };*/
 </script>
