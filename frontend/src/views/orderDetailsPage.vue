@@ -18,10 +18,14 @@
       </div>
       <div class="col-lg-6">
         <h4>Tuotteet</h4>
-        <div v-for="product in productDetails" :key="productDetails._id">
-          <h5>{{product[0].productName}}</h5>
-          <p>Luokka: {{product[0].productType}}</p>
-          <p>Hinta: {{product[0].price}} €</p>
+        <div class="card" v-for='(product, index) in productDetails' :key="productDetails._id">
+          <div class="card-body">
+            <h5>{{product[0].productName}}</h5>
+            <p>Luokka: {{product[0].productType}}</p>
+            <p>Hinta: {{product[0].price}} €</p>
+            <p>ALV: {{product[0].price * 0.24}} €</p>
+            <p>Määrä: {{details.products[index].quantity}}</p>
+          </div>
         </div>
       </div>
     </div>
