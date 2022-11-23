@@ -119,7 +119,7 @@ app.get("/findOneOrders/:id", function (req, res) {
     });
 });
 
-//consoleen tuo yhden order _id mukaan, joka saadaan url
+//consoleen tuo orders url:saadun firstName mukaan.
 app.get("/findOneOrdersName/:firstName", function (req, res) {
     Orders.find({ firstName: req.params.firstName }, function (err, results) {
         if (err) {
@@ -128,6 +128,34 @@ app.get("/findOneOrdersName/:firstName", function (req, res) {
         // Muuten lähetetään tietokannan tulokset selaimelle 
         else {
             console.log(results + "From findOne");
+            res.json(results);
+        }
+    });
+});
+
+//consoleen tuo orders järjestäen ne dateOrders perusteella laskevasti.
+app.get("/findOrdersSortDate", function (req, res) {
+    Orders.find().sort({ orderDate: 'desc' }).exec(function (err, results) {
+        if (err) {
+            console.log("Järjestelmässä tapahtui virhe", 500);
+        }
+        // Muuten lähetetään tietokannan tulokset selaimelle 
+        else {
+            console.log(results + "findOrdersSortDate");
+            res.json(results);
+        }
+    });
+});
+
+//consoleen tuo orders url:saadun firstName mukaan ja sorttaa ajanperusteella uudet ensin.
+app.get("/findOneOrdersNameSort/:firstName", function (req, res) {
+    Orders.find({ firstName: req.params.firstName }).sort({ orderDate: 'desc' }).exec(function (err, results) {
+        if (err) {
+            console.log("Järjestelmässä tapahtui virhe", 500);
+        }
+        // Muuten lähetetään tietokannan tulokset selaimelle 
+        else {
+            console.log(results + "From findOneOrdersNameSort");
             res.json(results);
         }
     });

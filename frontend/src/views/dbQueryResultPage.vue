@@ -3,12 +3,15 @@
 </script>
 
 <template>
+  <div class="sortDiv">
+    <button v-on:click="sortCard">Järjestä päivämäärän perusteella</button>
+  </div>
   <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
 </template>
 
 <script>
   export default{
-    props: ['firstName'],  //Saamme yksittäisen tilauksen ID:n propsina.
+    props: ['firstName'],  //Saamme yksittäisen tilauksen firstName:n propsina.
     
     data(){
       return{
@@ -32,7 +35,15 @@
           .then(data => this.orders = data)
           .catch(err => this.error = err.message)
           console.log(this.orders);
+      },
+      sortCard: await function (event) {
+        fetch("http://localhost:3000/findOneOrdersNameSort/" + this.$route.params.firstName) //Haetaan parametreissa olevan ID:n perusteella tiedot tilauksesta.
+          .then(res => res.json())
+          .then(data => this.orders = data)
+          .catch(err => this.error = err.message)
+          console.log(this.orders);
       }
+      
     }
   }
 
