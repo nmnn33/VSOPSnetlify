@@ -3,8 +3,22 @@
 </script>
 
 <template>
-  <div class="sortDiv">
-    <button v-on:click="sortCard">Järjestä päivämäärän perusteella</button>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+      <button v-on:click="sortCardDate" class="sortBtn">Järjestä päivämäärän perusteella</button>
+      </div>
+      <div class="col-sm">
+        <select class="form-select statusForm" id="statusCheck">
+          <option>käsittelyssä</option>
+          <option>lähetetty</option>
+          <option>peruutettu</option>
+        </select>
+      </div>
+      <div class="col-sm">
+        <button v-on:click="bringCardStatus">Hae Status</button>
+      </div>
+    </div>
   </div>
   <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
 </template>
@@ -36,14 +50,31 @@
           .catch(err => this.error = err.message)
           console.log(this.orders);
       },
-      sortCard: await function (event) {
+      sortCardDate: await function (event) {
         fetch("http://localhost:3000/findOneOrdersNameSort/" + this.$route.params.firstName) //Haetaan parametreissa olevan ID:n perusteella tiedot tilauksesta.
           .then(res => res.json())
           .then(data => this.orders = data)
           .catch(err => this.error = err.message)
           console.log(this.orders);
+      },
+      bringCardStatus: await function (event) {
+        let orderStatus = document.getElementById('statusCheck').value;
+        //Suomesta englanniksi käännös tietokantahakua varten
+        if (orderStatus == "käsittelyssä") {
+          orderStatus = "In handling";
+        }
+        else if (orderStatus == "lähetetty") {
+          orderStatus = "Dispatched";
+        }
+        else {
+          orderStatus = "Cancelled";
+        }
+        fetch("http://localhost:3000/findOrdersStatus/" + orderStatus) //Haetaan parametreissa olevan ID:n perusteella tiedot tilauksesta.
+          .then(res => res.json())
+          .then(data => this.orders = data)
+          .catch(err => this.error = err.message)
+          console.log(this.orders);
       }
-      
     }
   }
 

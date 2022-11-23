@@ -133,6 +133,20 @@ app.get("/findOneOrdersName/:firstName", function (req, res) {
     });
 });
 
+//consoleen tuo orders status mukaan.
+app.get("/findOrdersStatus/:status", function (req, res) {
+    Orders.find({ status: req.params.status }, function (err, results) {
+        if (err) {
+            console.log("Järjestelmässä tapahtui virhe", 500);
+        }
+        // Muuten lähetetään tietokannan tulokset selaimelle 
+        else {
+            console.log(results + "From /findOrdersStatus/:status");
+            res.json(results);
+        }
+    });
+});
+
 //consoleen tuo orders järjestäen ne dateOrders perusteella laskevasti.
 app.get("/findOrdersSortDate", function (req, res) {
     Orders.find().sort({ orderDate: 'desc' }).exec(function (err, results) {
