@@ -84,3 +84,17 @@ p {
 .statusName {
   display: inline-block;
 }
+
+.statusWrapper {
+  border-bottom: 1px solid black;
+  margin-bottom: 50px;
+}
+
+.deliveryInfo{
+  border-bottom: 1px solid black;
+  margin-bottom: 50px;
+}
+
+.orderCost{
+  border-bottom: 1px solid black;
+}

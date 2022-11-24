@@ -165,11 +165,11 @@ app.post("/addOrder", function (req, res) {
     }
 });
 
-// Päivittää Id:n perusteella yhden order dokumentin nimen Junioriksi (ei toimi vielä)
-app.put("updateOrder/:id", function (req, res) {
+// Päivittää Id:n perusteella yhden order dokumentin
+app.put("/updateOrder/:id", function (req, res) {
     var id = req.params.id;
 
-    Orders.findByIdAndUpdate(id, { $set: { "productName": 'dallas' } }, function (err, results) {
+    Orders.findByIdAndUpdate(id, { $set: { status: req.query.status } }, function (err, results) {
         // Tietokantavirheen käsittely 
         if (err) {
             console.log(err);

@@ -6,15 +6,41 @@
     <div class="statusWrapper">
       <h3 class="statusTitle">Status: </h3>
       <h3 v-if="details.status == 'In handling'" class="statusName">Käsittelyssä</h3>
+      <h3 v-if="details.status == 'Dispatched'" class="statusName">Lähetetty</h3>
+      <h3 v-if="details.status == 'Cancelled'" class="statusName">Peruutettu</h3>
     </div>
     <div class="row">
       <div class="col-lg-6">
-        <h4>Toimitusosoite</h4>
-        <p>{{details.firstName}} {{details.lastName}}</p>
-        <p>{{details.deliveryAddress}} <br> {{details.deliveryPostalCode}} Kaupunki</p>
-        <p v-if="details.phoneNumber">{{details.phoneNumber}}</p>
-        <p v-else>N/A</p>
-        <p>{{details.customerEmail}}</p>
+        <div class="deliveryInfo">
+          <h4>Toimitusosoite</h4>
+          <p>{{details.firstName}} {{details.lastName}}</p>
+          <p>{{details.deliveryAddress}} <br> {{details.deliveryPostalCode}} Kaupunki</p>
+          <p v-if="details.phoneNumber">{{details.phoneNumber}}</p>
+          <p v-else>N/A</p>
+          <p>{{details.customerEmail}}</p>
+        </div>
+        <div class="orderCost">
+          <h4>Hinta</h4>
+          <p>Veroton hinta: {{(this.totalCost - this.totalVAT).toFixed(2)}} €</p>
+          <p>ALV: {{this.totalVAT}} €</p>
+          <p>Verollinen hinta: {{this.totalCost}} €</p>
+          <p>Toimitus: 4.99 €</p>
+          <p>Kokonaishinta: {{this.totalCost + 4.99}} €</p>
+        </div>
+        <div class="orderButtons">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Status: {{this.details.status}}
+            </button>
+            <ul class="dropdown-menu">
+              <li value="0"><a class="dropdown-item" @click="statusSelection($event.target.text)">In handling</a></li>
+              <li value="1"><a class="dropdown-item" @click="statusSelection($event.target.text)">Dispatched</a></li>
+              <li value="2"><a class="dropdown-item" @click="statusSelection($event.target.text)">Cancelled</a></li>
+            </ul>
+          </div>
+          <!-- Tämä nappi avaa Boostrap modal komponentin -->
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Poista Tilaus</button>
+        </div>
       </div>
       <div class="col-lg-6">
         <h4>Tuotteet</h4>
@@ -23,8 +49,28 @@
             <h5>{{product[0].productName}}</h5>
             <p>Luokka: {{product[0].productType}}</p>
             <p>Hinta: {{product[0].price}} €</p>
-            <p>ALV: {{product[0].price * 0.24}} €</p>
+            <p>ALV: {{this.VAT[index]}} €</p>
             <p>Määrä: {{details.products[index].quantity}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Tähän alle tulee Bootstrap modal: -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel"><i class="bi bi-exclamation-triangle-fill"></i> Olet poistamassa tilausta</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Haluatko varmasti poistaa tämän tilauksen? Tätä toimintoa ei voi peruuttaa.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Peruuta</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="this.deleteOrder()">Poista Tilaus</button>
           </div>
         </div>
       </div>
@@ -36,12 +82,16 @@
 <script>
 
   export default{
-    props: ['id'],  //Saamme yksittäisen tilauksen ID:n propsina.
+    props: ['id'],  //Saamme yksittäisen tilauksen ID:n propsina (Tää saatta olla vähän turha, mutta antaa sen nyt olla tässä).
+    
     
     data(){
       return{
         details: [],
         productDetails: [],
+        VAT: [],
+        totalVAT: 0,
+        totalCost: 0,
         error: []
       }
     },
@@ -73,7 +123,28 @@
             .catch(err => this.error = err.message)
             i++
           }
-          console.log(this.productDetails)
+          console.log(this.productDetails);
+          this.calculateInfo();
+      },
+      async calculateInfo(){
+        var i = 0;
+        while(i < this.productDetails.length){
+          this.totalCost += this.productDetails[i][0].price
+          var vat = this.productDetails[i][0].price * 0.24
+          this.VAT[i] = vat.toFixed(2) * 1  //Pyöristetty kerrotaan 1:llä, jotta saadaan tulos numero´muodossa. Muussa tapauksessa tallentuu string arvona.
+          this.totalVAT += this.VAT[i]
+          i++
+        }
+        console.log(this.VAT);
+      },
+      statusSelection(e){
+        console.log(e);
+        fetch("http://localhost:3000/updateOrder/" + this.details._id + "/?status=" + e , {method: "PUT"})
+        .then(res => res.json())
+        .then(this.$router.go())
+      },
+      deleteOrder(){
+        console.log("This deletes the order")
       }
     }
   }
