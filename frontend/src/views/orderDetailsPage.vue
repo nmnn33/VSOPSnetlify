@@ -7,9 +7,9 @@
 
     <div class="statusWrapper">
       <h3 class="statusTitle">Status: </h3>
-      <h3 v-if="details.status == 'In handling'" class="statusName">Käsittelyssä</h3>
-      <h3 v-if="details.status == 'Dispatched'" class="statusName">Lähetetty</h3>
-      <h3 v-if="details.status == 'Cancelled'" class="statusName">Peruutettu</h3>
+      <h3 v-if="details.status == 'In handling'" class="statusName" style="color:orange">Käsittelyssä</h3>
+      <h3 v-if="details.status == 'Dispatched'" class="statusName" style="color:green">Lähetetty</h3>
+      <h3 v-if="details.status == 'Cancelled'" class="statusName" style="color:red">Peruutettu</h3>
     </div>
 
     <div class="row">
@@ -31,19 +31,19 @@
           <p>Kokonaishinta: {{this.totalCost + 4.99}} €</p>
         </div>
         <div class="orderButtons">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Status
+          <div class="dropdown btnrow">
+            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Muuta status
             </button>
             <ul class="dropdown-menu">
               <li><h6 class="dropdown-header">Valitse tilauksen status</h6></li>
-              <li value="0"><a class="dropdown-item" @click="statusSelection($event.target.text)">Käsittelyssä</a></li>
-              <li value="1"><a class="dropdown-item" @click="statusSelection($event.target.text)">Lähetetty</a></li>
-              <li value="2"><a class="dropdown-item" @click="statusSelection($event.target.text)">Peruutettu</a></li>
+              <li><a class="dropdown-item" @click="statusSelection($event.target.text)">Käsittelyssä</a></li>
+              <li><a class="dropdown-item" @click="statusSelection($event.target.text)">Lähetetty</a></li>
+              <li><a class="dropdown-item" @click="statusSelection($event.target.text)">Peruutettu</a></li>
             </ul>
           </div>
           <!-- Tämä nappi avaa Boostrap modal komponentin -->
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Poista Tilaus</button>
+          <button type="button" class="btn btn-danger btnrow" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Poista Tilaus</button>
         </div>
       </div>
       

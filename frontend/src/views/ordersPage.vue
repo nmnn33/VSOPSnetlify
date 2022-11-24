@@ -19,7 +19,9 @@
   <br>
   <div v-if="orders" class="row">
       <!-- Jokaista tilausta kohden tehään OrderCard kompnentti -->
-      <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
+      <div class="col-sm-6" v-for="order in orders">
+        <OrderCard :key="orders._id" :orders="order" />
+      </div>
   </div>
   <div v-if="!orders.length" class="eiTuloksia">
     <h1>Ei löydy tilauksia tietokannasta.</h1>
