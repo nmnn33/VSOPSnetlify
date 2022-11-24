@@ -26,6 +26,12 @@ const Orders = mongoose.model(
     "orders"
 );
 
+//Sallii CORS
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 //Polut alla
 app.get("/", function (req, res) {
@@ -92,7 +98,7 @@ app.post("/addProduct", function (req, res) {
 });
 
 //consoleen tuo kaikki Orders dokumentit
-app.get("/findOrders", function (req, res) {
+app.get("/findOrders", function (req, res, next) {
     Orders.find({}, null, { limit: 50 }, function (err, results) {
         if (err) {
             console.log("Järjestelmässä tapahtui virhe", 500);
