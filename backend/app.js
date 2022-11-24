@@ -242,7 +242,7 @@ app.delete("/deleteOrder/:id", function (req, res) {
         } // Viimeisenä tilanne jossa kaikki ok
         else {
             console.log(results);
-            res.send("Poistettu tilaus: " + id);
+            res.json("Poistettu tilaus: " + id, 200);
         }
     });
 });

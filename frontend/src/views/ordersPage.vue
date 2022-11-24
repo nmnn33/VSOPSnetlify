@@ -33,6 +33,8 @@
       .then(res => res.json())
       .then(data => this.orders = data)
       .catch(err => this.error = err.message)
+
+      console.log("This message is for test purposes")
     },
     methods: {
       sortCard: await function (event) {

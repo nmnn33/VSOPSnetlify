@@ -1,14 +1,17 @@
 <template>
+
     <div class="orderTitleWrapper">
       <h2 class="orderTitle1">Tilaus ID: {{id}}</h2>
       <h2 class="orderTitle2">Tilattu: {{details.orderDate}}</h2>
     </div>
+
     <div class="statusWrapper">
       <h3 class="statusTitle">Status: </h3>
       <h3 v-if="details.status == 'In handling'" class="statusName">Käsittelyssä</h3>
       <h3 v-if="details.status == 'Dispatched'" class="statusName">Lähetetty</h3>
       <h3 v-if="details.status == 'Cancelled'" class="statusName">Peruutettu</h3>
     </div>
+
     <div class="row">
       <div class="col-lg-6">
         <div class="deliveryInfo">
@@ -22,7 +25,7 @@
         <div class="orderCost">
           <h4>Hinta</h4>
           <p>Veroton hinta: {{(this.totalCost - this.totalVAT).toFixed(2)}} €</p>
-          <p>ALV: {{this.totalVAT}} €</p>
+          <p>ALV: {{this.totalVAT.toFixed(2)}} €</p>
           <p>Verollinen hinta: {{this.totalCost}} €</p>
           <p>Toimitus: 4.99 €</p>
           <p>Kokonaishinta: {{this.totalCost + 4.99}} €</p>
@@ -30,18 +33,20 @@
         <div class="orderButtons">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Status: {{this.details.status}}
+              Status
             </button>
             <ul class="dropdown-menu">
-              <li value="0"><a class="dropdown-item" @click="statusSelection($event.target.text)">In handling</a></li>
-              <li value="1"><a class="dropdown-item" @click="statusSelection($event.target.text)">Dispatched</a></li>
-              <li value="2"><a class="dropdown-item" @click="statusSelection($event.target.text)">Cancelled</a></li>
+              <li><h6 class="dropdown-header">Valitse tilauksen status</h6></li>
+              <li value="0"><a class="dropdown-item" @click="statusSelection($event.target.text)">Käsittelyssä</a></li>
+              <li value="1"><a class="dropdown-item" @click="statusSelection($event.target.text)">Lähetetty</a></li>
+              <li value="2"><a class="dropdown-item" @click="statusSelection($event.target.text)">Peruutettu</a></li>
             </ul>
           </div>
           <!-- Tämä nappi avaa Boostrap modal komponentin -->
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Poista Tilaus</button>
         </div>
       </div>
+      
       <div class="col-lg-6">
         <h4>Tuotteet</h4>
         <div class="card" v-for='(product, index) in productDetails' :key="productDetails._id">
@@ -49,7 +54,7 @@
             <h5>{{product[0].productName}}</h5>
             <p>Luokka: {{product[0].productType}}</p>
             <p>Hinta: {{product[0].price}} €</p>
-            <p>ALV: {{this.VAT[index]}} €</p>
+            <p v-if="this.VAT[index]">ALV: {{this.VAT[index].toFixed(2)}} €</p>
             <p>Määrä: {{details.products[index].quantity}}</p>
           </div>
         </div>
@@ -130,21 +135,35 @@
         var i = 0;
         while(i < this.productDetails.length){
           this.totalCost += this.productDetails[i][0].price
-          var vat = this.productDetails[i][0].price * 0.24
-          this.VAT[i] = vat.toFixed(2) * 1  //Pyöristetty kerrotaan 1:llä, jotta saadaan tulos numero´muodossa. Muussa tapauksessa tallentuu string arvona.
+          this.VAT[i] = this.productDetails[i][0].price * 0.24
           this.totalVAT += this.VAT[i]
           i++
         }
         console.log(this.VAT);
       },
-      statusSelection(e){
+      async statusSelection(e){
         console.log(e);
-        fetch("http://localhost:3000/updateOrder/" + this.details._id + "/?status=" + e , {method: "PUT"})
+        var status;
+
+        if(e == "Käsittelyssä"){
+          status = "In handling"
+        }
+        else if(e == "Lähetetty"){
+          status = "Dispatched"
+        }
+        else {
+          status = "Cancelled"
+        }
+        
+        fetch("http://localhost:3000/updateOrder/" + this.details._id + "/?status=" + status , {method: "PUT"})
         .then(res => res.json())
         .then(this.$router.go())
       },
-      deleteOrder(){
+      async deleteOrder(){
         console.log("This deletes the order")
+        fetch("http://localhost:3000/deleteOrder/" + this.details._id , {method: "DELETE"})
+        .then(res => res.json())
+        .then(this.$router.go(-1))
       }
     }
   }
