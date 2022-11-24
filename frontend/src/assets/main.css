@@ -63,8 +63,9 @@ p {
 }
 
 /* ordersPage-sivun ja dbQueryResultPage-sivun asiat*/
-#statusCheck {
-  width: 100%;
+.eiTuloksia {
+  margin: auto;
+  width: 50%;
 }
 
 /* orderDetailsPage-sivun asiat: */
@@ -93,11 +94,11 @@ p {
   margin-bottom: 50px;
 }
 
-.deliveryInfo{
+.deliveryInfo {
   border-bottom: 1px solid black;
   margin-bottom: 50px;
 }
 
-.orderCost{
+.orderCost {
   border-bottom: 1px solid black;
 }

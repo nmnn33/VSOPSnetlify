@@ -3,24 +3,26 @@
 </script>
 
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-      <button v-on:click="sortCardDate" class="sortBtn">Järjestä päivämäärän perusteella</button>
-      </div>
-      <div class="col-sm">
-        <select class="form-select statusForm" id="statusCheck">
-          <option>käsittelyssä</option>
-          <option>lähetetty</option>
-          <option>peruutettu</option>
-        </select>
-      </div>
-      <div class="col-sm">
-        <button v-on:click="bringCardStatus">Hae Status</button>
-      </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <button v-on:click="sortCardDate" class="btn btn-secondary">Järjestä päivämäärän perusteella</button>
     </div>
+    <span class="input-group-text">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <select class="form-control statusCheck">
+        <option value="" selected disabled hidden>Valitse status</option>
+        <option>käsittelyssä</option>
+        <option>lähetetty</option>
+        <option>peruutettu</option>
+      </select>
+      <button v-on:click="bringCardStatus" class="btn btn-primary">Hae Status</button>
   </div>
-  <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
+  <br>
+  <div v-if="orders" class="row">
+    <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
+  </div>
+  <div v-if="!orders.length" class="eiTuloksia">
+    <h1>Ei löydy etunimellä tilauksia tietokannasta.</h1>
+  </div>
 </template>
 
 <script>
@@ -77,35 +79,4 @@
       }
     }
   }
-
-/* vanhaa tietoa varmuuden vuoksi taltioitu!
-  export default {
-        name : 'getOneOrder',
-        data (){
-            return {
-                orders: []
-            }
-        },
-        methods : {
-           async dbQuery(e) {
-            if (document.getElementById('navbarSelect1').value == "Tilaukset") {
-              const response =  await fetch("http://localhost:3000/findOneOrders/" + document.getElementById('navSearch1').value);
-              const data = await response.json();
-              const arrayMuoto = [data]; //Tämä kohta on tarpeen, sillä response antaa Object, ja jotta v-for toimii pitää olla array. Tässä on array, jossa on vain 1 objekti.
-              this.orders = arrayMuoto;
-              console.log(arrayMuoto);
-              document.getElementById('navSearch1').value = "";
-            }
-            else if (document.getElementById('navbarSelect1').value == "Varastotuote") {
-              console.log("Varastotuotteet");
-            }
-            else {
-              console.log("jotain meni pieleen...");
-            }
-          }
-        },
-        updated(){
-          this.dbQuery();
-        }
-  };*/
 </script>

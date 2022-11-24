@@ -3,20 +3,26 @@
 </script>
 
 <template>
-  <div class="sortDiv">
-    <button v-on:click="sortCardDate">Järjestä päivämäärän perusteella</button>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <button v-on:click="sortCardDate" class="btn btn-secondary">Järjestä päivämäärän perusteella</button>
+    </div>
+    <span class="input-group-text">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <select class="form-control statusCheck">
+        <option value="" selected disabled hidden>Valitse status</option>
+        <option>käsittelyssä</option>
+        <option>lähetetty</option>
+        <option>peruutettu</option>
+      </select>
+      <button v-on:click="bringCardStatus" class="btn btn-primary">Hae Status</button>
   </div>
-  <div class="sortDiv">
-    <select class="form-select" id="statusCheck">
-      <option>käsittelyssä</option>
-      <option>lähetetty</option>
-      <option>peruutettu</option>
-    </select>
-    <button v-on:click="bringCardStatus">Hae Status</button>
-  </div>
+  <br>
   <div v-if="orders" class="row">
       <!-- Jokaista tilausta kohden tehään OrderCard kompnentti -->
       <OrderCard v-for="order in orders" :key="orders._id" :orders="order" />
+  </div>
+  <div v-if="!orders.length" class="eiTuloksia">
+    <h1>Ei löydy tilauksia tietokannasta.</h1>
   </div>
 </template>
 
@@ -37,7 +43,7 @@
       console.log("This message is for test purposes")
     },
     methods: {
-      sortCard: await function (event) {
+      sortCardDate: await function (event) {
         fetch("http://localhost:3000/findOrdersSortDate") //Haetaan orderDate 'desc' perusteella orderx.
           .then(res => res.json())
           .then(data => this.orders = data)
