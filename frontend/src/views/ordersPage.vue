@@ -8,7 +8,7 @@
       <button v-on:click="sortCardDate" class="btn btn-secondary">Järjestä päivämäärän perusteella</button>
     </div>
     <span class="input-group-text">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-      <select class="form-control statusCheck">
+      <select class="form-control" id="statusCheck">
         <option value="" selected disabled hidden>Valitse status</option>
         <option>käsittelyssä</option>
         <option>lähetetty</option>
